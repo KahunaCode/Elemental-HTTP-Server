@@ -4,7 +4,9 @@ const http = require('http');
 const fs = require('fs');
 const qs = require('querystring');
 
-//let htmlPages = ['index.html', 'helium.html'];
+var htmlPages = fs.readdirSync('./public');
+console.log("files in /public", htmlPages);
+
 
 function parseWrite({elementName, elementSymbol, elementAtomicNumber, elementDescription}){
 
@@ -33,8 +35,13 @@ function parseWrite({elementName, elementSymbol, elementAtomicNumber, elementDes
 
 const server = http.createServer(function(req, res) {
   console.log("client connected");
-  const { method, url } = req;
-  console.log(url);
+  var { method, url } = req;
+  url = url.slice(1);
+  console.log("url is ",url);
+  if (htmlPages.includes(url)){
+        console.log('serve this page:', url);
+      }
+
   let body = "";
   req.on('data', (chunk) => {
     //body.push(chunk);
@@ -48,6 +55,7 @@ const server = http.createServer(function(req, res) {
       console.log("POST to /element");
       parseWrite(body);
     }
+
 
 
   });
