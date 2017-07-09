@@ -36,7 +36,7 @@ function parseWrite({elementName, elementSymbol, elementAtomicNumber, elementDes
 const server = http.createServer(function(req, res) {
   console.log("client connected");
   var { method, url } = req;
-  url = url.slice(1);
+  url = url.slice(1);//remove "/" for comparison to htmlPages
   console.log("url is ",url);
   if (htmlPages.includes(url)){
         console.log('serve this page:', url);
